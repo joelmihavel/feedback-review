@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Flent Homes — What the App Enables</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300;1,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0E1117;
+  --surface:#161B27;
+  --surface2:#1E2535;
+  --border:#2A3045;
+  --ink:#F0EEE8;
+  --ink-dim:#8B92A8;
+  --ink-dimmer:#4A5168;
+  --orange:#FF6B35;
+  --orange-dim: rgba(255,107,53,0.12);
+  --teal:#2DD4BF;
+  --teal-dim:rgba(45,212,191,0.1);
+  --violet:#A78BFA;
+  --violet-dim:rgba(167,139,250,0.1);
+  --amber:#FBBF24;
+  --amber-dim:rgba(251,191,36,0.1);
+  --green:#4ADE80;
+  --green-dim:rgba(74,222,128,0.1);
+  --r:14px;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ── TOP NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;gap:8px;
+  padding:0 28px;height:52px;
+  background:rgba(14,17,23,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+  color:var(--orange);margin-right:auto;letter-spacing:-0.3px;
+}
+.ntab{
+  padding:5px 14px;border-radius:6px;font-size:13px;font-weight:500;
+  cursor:pointer;border:none;background:none;color:var(--ink-dim);
+  transition:all .15s;
+}
+.ntab:hover{background:var(--surface2);color:var(--ink)}
+.ntab.on{background:var(--surface2);color:var(--ink);border:1px solid var(--border)}
+
+/* ── PAGE SECTIONS ── */
+.page{display:none}
+.page.on{display:block}
+main{padding-top:52px}
+
+/* ── SHARED HERO ── */
+.hero{
+  padding:72px 40px 40px;max-width:720px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--orange);margin-bottom:18px;
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--orange)}
+.hero h1{
+  font-family:'Fraunces',serif;font-weight:800;
+  font-size:clamp(32px,5vw,52px);line-height:1.08;
+  color:var(--ink);margin-bottom:14px;
+}
+.hero h1 i{color:var(--orange);font-style:italic}
+.hero p{font-size:16px;color:var(--ink-dim);line-height:1.7;max-width:520px}
+
+/* ── OVERVIEW PAGE ── */
+.ov-wrap{padding:0 40px 80px;max-width:1120px}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.pillar{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px 24px;
+}
+.pillar .pico{font-size:32px;margin-bottom:14px}
+.pillar h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin-bottom:8px}
+.pillar p{font-size:14px;color:var(--ink-dim);line-height:1.6}
+
+.who-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-dimmer);margin-bottom:16px}
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.who-chip{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:18px 16px;text-align:center;
+}
+.who-chip .wi{font-size:26px;margin-bottom:8px}
+.who-chip h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.who-chip p{font-size:12px;color:var(--ink-dim);line-height:1.4}
+
+/* ── TENANT JOURNEY ── */
+.tj-wrap{padding:0 40px 80px;max-width:1160px}
+
+/* Stage rail */
+.stage-rail{
+  display:flex;align-items:stretch;gap:0;
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;margin-bottom:48px;
+}
+.srail-item{
+  flex:1;padding:14px 20px;cursor:pointer;
+  border-right:1px solid var(--border);
+  background:var(--surface);
+  transition:all .2s;
+  display:flex;flex-direction:column;gap:4px;
+}
+.srail-item:last-child{border-right:none}
+.srail-item:hover{background:var(--surface2)}
+.srail-item.on{background:var(--orange);border-color:var(--orange)}
+.srail-item.on .sr-num{color:rgba(255,255,255,0.6)}
+.srail-item.on .sr-label{color:#fff}
+.srail-item.on .sr-sub{color:rgba(255,255,255,0.65)}
+.sr-num{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink-dimmer)}
+.sr-label{font-size:15px;font-weight:600;color:var(--ink)}
+.sr-sub{font-size:12px;color:var(--ink-dim)}
+
+/* Stage panel */
+.stage-panel{display:none;animation:fadeUp .3s ease}
+.stage-panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Journey flow — horizontal timeline of touchpoints */
+.flow{
+  display:flex;flex-direction:column;gap:40px;
+}
+
+/* each step row */
+.fstep{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:32px;
+  align-items:start;
+}
+.fstep-meta{}
+.fstep-num{
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--ink-dimmer);
+  margin-bottom:6px;
+}
+.fstep-title{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:20px;line-height:1.2;margin-bottom:8px;
+}
+.fstep-desc{font-size:13.5px;color:var(--ink-dim);line-height:1.6}
+
+.fstep-content{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+
+/* App feature card — the HERO element */
+.app-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+.app-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:var(--r) var(--r) 0 0;
+}
+.app-card.orange::before{background:var(--orange)}
+.app-card.teal::before{background:var(--teal)}
+.app-card.violet::before{background:var(--violet)}
+.app-card.amber::before{background:var(--amber)}
+.app-card.green::before{background:var(--green)}
+
+.card-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:0.9px;
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.card-eyebrow.orange{color:var(--orange)}
+.card-eyebrow.teal{color:var(--teal)}
+.card-eyebrow.violet{color:var(--violet)}
+.card-eyebrow.amber{color:var(--amber)}
+.card-eyebrow.green{color:var(--green)}
+
+.app-card h4{font-size:15px;font-weight:600;margin-bottom:10px;line-height:1.3}
+
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.feat-list li{
+  font-size:13.5px;color:var(--ink-dim);
+  display:flex;gap:10px;align-items:flex-start;
+  line-height:1.5;
+}
+.feat-list li .ficon{
+  font-size:15px;flex-shrink:0;margin-top:1px;
+  width:22px;text-align:center;
+}
+
+/* AUTO badge */
+.auto{
+  display:inline-block;
+  font-size:9px;font-weight:700;letter-spacing:0.6px;
+  text-transform:uppercase;
+  background:var(--amber-dim);color:var(--amber);
+  border:1px solid rgba(251,191,36,0.25);
+  border-radius:4px;padding:1px 5px;
+  vertical-align:middle;margin-left:4px;
+}
+.new{
+  display:inline-block;
+  font-size:9px;font-weight:700;letter-spacing:0.6px;
+  text-transform:uppercase;
+  background:var(--teal-dim);color:var(--teal);
+  border:1px solid rgba(45,212,191,0.25);
+  border-radius:4px;padding:1px 5px;
+  vertical-align:middle;margin-left:4px;
+}
+
+/* divider between steps */
+.step-divider{
+  display:flex;align-items:center;gap:16px;
+  padding-left:220px;padding-right:0;
+  margin: -16px 0;
+}
+.step-divider::before,.step-divider::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.step-divider span{
+  font-size:11px;color:var(--ink-dimmer);white-space:nowrap;
+  padding:0 8px;
+}
+
+/* ── TEAMS PAGE ── */
+.teams-wrap{padding:0 40px 80px;max-width:1160px}
+
+.team-section{margin-bottom:56px}
+.team-head{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:24px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+.team-avatar{
+  width:50px;height:50px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;flex-shrink:0;
+}
+.team-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px;margin-bottom:4px}
+.team-head p{font-size:14px;color:var(--ink-dim)}
+
+.team-features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+/* feature block */
+.fblock{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:20px;
+}
+.fblock-icon{font-size:24px;margin-bottom:12px}
+.fblock h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.fblock p{font-size:13.5px;color:var(--ink-dim);line-height:1.55}
+.fblock .fbadge{
+  display:inline-block;margin-top:10px;
+  font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;
+  background:var(--surface2);color:var(--ink-dim);border:1px solid var(--border);
+}
+
+/* ── HAMBURGER MENU ── */
+.menu-toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  width:36px;height:36px;flex-shrink:0;
+  position:relative;
+}
+.menu-toggle span{
+  display:block;width:20px;height:2px;background:var(--ink-dim);
+  position:absolute;left:8px;transition:all .25s;
+}
+.menu-toggle span:nth-child(1){top:10px}
+.menu-toggle span:nth-child(2){top:17px}
+.menu-toggle span:nth-child(3){top:24px}
+.menu-toggle.open span:nth-child(1){transform:rotate(45deg);top:17px}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:rotate(-45deg);top:17px}
+
+.nav-links{display:contents}
+
+/* ── RESPONSIVE: TABLET ── */
+@media(max-width:1024px){
+  .pillars{grid-template-columns:1fr 1fr}
+  .who-grid{grid-template-columns:repeat(2,1fr)}
+  .team-features{grid-template-columns:repeat(2,1fr)}
+  .fstep{grid-template-columns:200px 1fr;gap:24px}
+  .hero,.tj-wrap,.ov-wrap,.teams-wrap{padding-left:24px;padding-right:24px}
+}
+
+/* ── RESPONSIVE: MOBILE ── */
+@media(max-width:768px){
+  /* Nav becomes hamburger */
+  .menu-toggle{display:block}
+  .nav-links{
+    display:none;
+    position:fixed;top:52px;left:0;right:0;
+    background:rgba(14,17,23,0.96);
+    backdrop-filter:blur(16px);
+    flex-direction:column;padding:12px 20px 20px;
+    border-bottom:1px solid var(--border);
+    gap:4px;
+  }
+  .nav-links.open{display:flex}
+  .ntab{text-align:left;padding:10px 14px;font-size:14px;width:100%}
+
+  /* Hero */
+  .hero{padding:56px 20px 28px}
+  .hero h1{font-size:28px}
+  .hero p{font-size:15px}
+
+  /* Layout stacking */
+  .fstep{grid-template-columns:1fr;gap:16px}
+  .fstep-content{grid-template-columns:1fr}
+  .fstep-title{font-size:18px}
+  .pillars{grid-template-columns:1fr}
+  .who-grid{grid-template-columns:1fr 1fr}
+  .team-features{grid-template-columns:1fr}
+  .step-divider{padding-left:0}
+
+  /* Stage rail — scroll horizontally on mobile */
+  .stage-rail{
+    overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    flex-wrap:nowrap;
+  }
+  .srail-item{
+    min-width:200px;flex-shrink:0;
+    scroll-snap-align:start;
+  }
+
+  /* Containers */
+  .tj-wrap,.ov-wrap,.teams-wrap{padding-left:16px;padding-right:16px}
+
+  /* Team heads */
+  .team-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .team-head h2{font-size:20px}
+}
+
+/* ── RESPONSIVE: SMALL MOBILE ── */
+@media(max-width:420px){
+  nav{padding:0 16px}
+  .logo{font-size:16px}
+  .hero h1{font-size:24px}
+  .hero p{font-size:14px}
+  .who-grid{grid-template-columns:1fr}
+  .srail-item{min-width:170px;padding:12px 14px}
+  .sr-label{font-size:13px}
+  .app-card{padding:16px}
+  .app-card h4{font-size:14px}
+  .feat-list li{font-size:13px}
+  .fblock{padding:16px}
+  .pillar{padding:20px 18px}
+}
+
+/* ── FEEDBACK SYSTEM ── */
+
+/* Login overlay */
+.fb-login-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(10,12,18,0.92);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+}
+.fb-login-overlay.hidden{display:none}
+.fb-login-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:36px 32px;
+  width:90%;max-width:380px;text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
+}
+.fb-login-box .logo-mark{
+  font-family:'Fraunces',serif;font-weight:600;font-size:22px;
+  color:var(--orange);margin-bottom:24px;
+}
+.fb-login-box h3{
+  font-family:'Fraunces',serif;font-weight:600;font-size:20px;
+  margin-bottom:6px;
+}
+.fb-login-box p{
+  font-size:13px;color:var(--ink-dim);margin-bottom:22px;line-height:1.5;
+}
+.fb-login-box input{
+  width:100%;font-family:'Instrument Sans',sans-serif;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:12px 14px;
+  color:var(--ink);font-size:15px;text-align:center;
+  outline:none;transition:border-color .15s;
+  margin-bottom:16px;
+}
+.fb-login-box input:focus{border-color:var(--orange)}
+.fb-login-box button{
+  width:100%;font-family:'Instrument Sans',sans-serif;
+  font-size:14px;font-weight:600;
+  padding:11px 20px;border-radius:8px;
+  cursor:pointer;border:none;
+  background:var(--orange);color:#fff;
+  transition:filter .15s;
+}
+.fb-login-box button:hover{filter:brightness(1.1)}
+
+/* Current user pill in nav */
+.fb-user-pill{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;color:var(--ink-dim);
+  margin-left:auto;white-space:nowrap;
+}
+.fb-user-info{
+  display:flex;align-items:center;gap:6px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;padding:4px 12px 4px 8px;
+}
+.fb-user-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);flex-shrink:0;
+}
+.fb-user-pill.admin .fb-user-dot{background:var(--amber)}
+.fb-user-logout{
+  font-family:'Instrument Sans',sans-serif;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--ink-dimmer);border-radius:6px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  padding:4px 10px;transition:all .15s;
+}
+.fb-user-logout:hover{color:var(--ink);background:var(--border)}
+
+/* Tooltip */
+.fb-tooltip{
+  position:absolute;z-index:300;
+  background:var(--orange);color:#fff;
+  font-size:12px;font-weight:600;
+  padding:6px 14px;border-radius:6px;
+  cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 16px rgba(0,0,0,0.4);
+  display:none;
+}
+.fb-tooltip::after{
+  content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);
+  border-left:5px solid transparent;border-right:5px solid transparent;
+  border-top:5px solid var(--orange);
+}
+
+/* Modal overlay */
+.fb-overlay{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;
+}
+.fb-overlay.open{display:flex}
+
+.fb-modal{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  width:90%;max-width:420px;
+  box-shadow:0 24px 48px rgba(0,0,0,0.4);
+}
+.fb-modal h3{
+  font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+  margin-bottom:6px;
+}
+.fb-modal .fb-context{
+  font-size:13px;color:var(--ink-dim);line-height:1.5;
+  margin-bottom:20px;
+  max-height:60px;overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fb-modal .fb-context em{
+  color:var(--orange);font-style:normal;font-weight:600;
+}
+.fb-modal .fb-type-label{
+  display:inline-block;font-size:10px;font-weight:700;
+  letter-spacing:0.6px;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;margin-bottom:14px;
+}
+.fb-type-text{background:var(--teal-dim);color:var(--teal)}
+.fb-type-section{background:var(--violet-dim);color:var(--violet)}
+.fb-type-overall{background:var(--amber-dim);color:var(--amber)}
+.fb-modal label{
+  display:block;font-size:12px;font-weight:600;
+  letter-spacing:0.5px;text-transform:uppercase;
+  color:var(--ink-dim);margin-bottom:6px;
+}
+.fb-modal input,
+.fb-modal textarea{
+  width:100%;font-family:'Instrument Sans',sans-serif;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px 12px;
+  color:var(--ink);font-size:14px;
+  outline:none;transition:border-color .15s;
+}
+.fb-modal input:focus,
+.fb-modal textarea:focus{border-color:var(--orange)}
+.fb-modal textarea{resize:vertical;min-height:80px;line-height:1.5}
+.fb-modal .fb-field{margin-bottom:16px}
+.fb-modal .fb-actions{
+  display:flex;gap:10px;justify-content:flex-end;
+}
+.fb-modal .fb-btn{
+  font-family:'Instrument Sans',sans-serif;
+  font-size:13px;font-weight:600;
+  padding:8px 20px;border-radius:8px;
+  cursor:pointer;border:none;transition:all .15s;
+}
+.fb-btn-cancel{background:var(--surface2);color:var(--ink-dim)}
+.fb-btn-cancel:hover{background:var(--border);color:var(--ink)}
+.fb-btn-submit{background:var(--orange);color:#fff}
+.fb-btn-submit:hover{filter:brightness(1.1)}
+
+/* Feedback count badge on blocks */
+.fb-badge{
+  position:absolute;top:8px;right:8px;z-index:10;
+  background:var(--orange);color:#fff;
+  font-size:10px;font-weight:700;
+  min-width:20px;height:20px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 6px;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(255,107,53,0.4);
+}
+
+/* Feedback panel (sidebar) */
+.fb-panel{
+  position:fixed;top:52px;right:0;bottom:0;z-index:350;
+  width:360px;max-width:90vw;
+  background:var(--surface);border-left:1px solid var(--border);
+  transform:translateX(100%);transition:transform .25s ease;
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+.fb-panel.open{transform:translateX(0)}
+.fb-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px;border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.fb-panel-head h3{
+  font-family:'Fraunces',serif;font-weight:600;font-size:16px;
+}
+.fb-panel-close{
+  background:none;border:none;color:var(--ink-dim);
+  font-size:20px;cursor:pointer;padding:4px 8px;
+}
+.fb-panel-close:hover{color:var(--ink)}
+.fb-panel-body{padding:16px 20px;flex:1}
+.fb-item{
+  padding:14px 0;border-bottom:1px solid var(--border);
+}
+.fb-item:last-child{border-bottom:none}
+.fb-item-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.fb-item-user{font-size:12px;font-weight:600;color:var(--orange)}
+.fb-item-type{
+  font-size:9px;font-weight:700;letter-spacing:0.5px;
+  text-transform:uppercase;padding:1px 6px;border-radius:3px;
+}
+.fb-item-comment{font-size:14px;color:var(--ink);line-height:1.5;margin-bottom:6px}
+.fb-item-sel{
+  font-size:12px;color:var(--ink-dim);
+  background:var(--surface2);padding:4px 8px;
+  border-radius:4px;display:inline-block;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.fb-item-time{font-size:11px;color:var(--ink-dimmer);margin-top:6px}
+.fb-empty{font-size:13px;color:var(--ink-dimmer);text-align:center;padding:40px 0}
+
+/* Nav buttons */
+.fb-nav-btn{
+  position:relative;
+  padding:5px 12px;border-radius:6px;font-size:13px;font-weight:500;
+  cursor:pointer;border:1px solid var(--border);
+  background:var(--surface2);color:var(--ink-dim);
+  transition:all .15s;
+}
+.fb-nav-btn:hover{color:var(--ink)}
+.fb-nav-count{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--orange);color:#fff;
+  font-size:9px;font-weight:700;
+  min-width:16px;height:16px;
+  border-radius:8px;
+  display:none;align-items:center;justify-content:center;
+  padding:0 4px;
+}
+.fb-nav-count.has{display:flex}
+
+/* Overall feedback FAB */
+.fb-overall-btn{
+  position:fixed;bottom:24px;right:24px;z-index:250;
+  background:var(--orange);color:#fff;
+  font-family:'Instrument Sans',sans-serif;
+  font-size:13px;font-weight:600;
+  padding:12px 22px;border-radius:50px;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 24px rgba(255,107,53,0.4);
+  transition:all .2s;
+}
+.fb-overall-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,107,53,0.5)}
+
+/* Admin toolbar */
+.admin-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:rgba(14,17,23,0.95);backdrop-filter:blur(12px);
+  border-top:1px solid var(--amber);
+  padding:10px 24px;
+  align-items:center;gap:12px;
+}
+.admin-bar.visible{display:flex}
+.admin-bar-label{
+  font-size:11px;font-weight:700;letter-spacing:0.8px;
+  text-transform:uppercase;color:var(--amber);
+  display:flex;align-items:center;gap:6px;
+  margin-right:auto;
+}
+.admin-bar-label::before{
+  content:'';width:8px;height:8px;border-radius:50%;
+  background:var(--amber);animation:adminPulse 2s infinite;
+}
+@keyframes adminPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.admin-bar .fb-btn{
+  font-family:'Instrument Sans',sans-serif;
+  font-size:12px;font-weight:600;
+  padding:7px 18px;border-radius:6px;
+  cursor:pointer;border:none;transition:all .15s;
+}
+.admin-btn-save{background:var(--amber);color:#000}
+.admin-btn-save:hover{filter:brightness(1.1)}
+.admin-btn-export{background:var(--surface2);color:var(--ink-dim);border:1px solid var(--border)}
+.admin-btn-export:hover{color:var(--ink);background:var(--border)}
+
+/* Admin editable state */
+[contenteditable="true"]{
+  outline:2px dashed rgba(251,191,36,0.3);
+  outline-offset:4px;
+  border-radius:4px;
+}
+[contenteditable="true"]:focus{
+  outline-color:var(--amber);
+}
+body.admin-mode main{padding-bottom:60px}
+
+/* Section hover highlight */
+[data-block-id]{
+  position:relative;
+  transition:outline .15s, outline-offset .15s;
+  outline:2px solid transparent;
+  outline-offset:2px;
+  border-radius:var(--r);
+}
+[data-block-id]:hover{
+  outline-color:rgba(255,107,53,0.25);
+}
+[data-block-id]>.fb-hover-tag{
+  position:absolute;top:6px;right:6px;z-index:20;
+  background:var(--orange);color:#fff;
+  font-size:11px;font-weight:600;
+  padding:4px 10px;border-radius:5px;
+  opacity:0;pointer-events:none;
+  transition:opacity .15s;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+[data-block-id]:hover>.fb-hover-tag{
+  opacity:1;pointer-events:auto;
+  cursor:pointer;
+}
+
+/* Delete button in feedback panel (admin) */
+.fb-item-delete{
+  background:none;border:1px solid var(--border);
+  color:var(--ink-dimmer);border-radius:4px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  padding:2px 8px;margin-top:8px;
+  transition:all .15s;
+  font-family:'Instrument Sans',sans-serif;
+}
+.fb-item-delete:hover{
+  color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,0.08);
+}
+
+/* Admin users list */
+.admin-users-btn{
+  font-family:'Instrument Sans',sans-serif;
+  font-size:12px;font-weight:600;
+  padding:7px 18px;border-radius:6px;
+  cursor:pointer;border:1px solid var(--border);
+  background:var(--surface2);color:var(--ink-dim);
+  transition:all .15s;
+}
+.admin-users-btn:hover{color:var(--ink);background:var(--border)}
+.admin-users-panel{
+  position:fixed;bottom:52px;right:24px;z-index:310;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:20px;width:280px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.4);
+  display:none;
+}
+.admin-users-panel.open{display:block}
+.admin-users-panel h4{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:14px;margin-bottom:12px;
+}
+.admin-users-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.admin-user-row{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--ink);
+}
+.admin-user-row .fb-user-dot{width:6px;height:6px}
+.admin-user-row span:last-child{
+  font-size:11px;color:var(--ink-dimmer);margin-left:auto;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Flent Homes</div>
+  <button class="menu-toggle" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <button class="ntab on"  onclick="show('overview',this)">Overview</button>
+    <button class="ntab"     onclick="show('tenant',this)">Tenant Journey</button>
+    <button class="ntab"     onclick="show('teams',this)">For Each Team</button>
+  </div>
+  <div class="fb-user-pill" id="fbUserPill" style="display:none">
+    <div class="fb-user-info">
+      <span class="fb-user-dot"></span>
+      <span id="fbUserName"></span>
+    </div>
+    <button class="fb-user-logout" onclick="logoutUser()">Log out</button>
+  </div>
+  <button class="fb-nav-btn" onclick="toggleFeedbackPanel()">
+    Feedback <span class="fb-nav-count" id="fbNavCount">0</span>
+  </button>
+</nav>
+
+<!-- Login modal -->
+<div class="fb-login-overlay" id="fbLogin">
+  <div class="fb-login-box">
+    <div class="logo-mark">Flent Homes</div>
+    <h3>Welcome</h3>
+    <p>Enter your name to start reviewing.<br/>Type <strong>admin</strong> to enable editing mode.</p>
+    <input type="text" id="fbLoginName" placeholder="Your name" autocomplete="off"/>
+    <button onclick="handleLogin()">Continue</button>
+  </div>
+</div>
+
+<!-- Feedback floating tooltip -->
+<div class="fb-tooltip" id="fbTooltip" onclick="openFeedbackModal()">+ Add Feedback</div>
+
+<!-- Overall feedback FAB -->
+<button class="fb-overall-btn" id="fbOverallBtn" onclick="openOverallFeedback()">+ Overall Feedback</button>
+
+<!-- Feedback modal -->
+<div class="fb-overlay" id="fbOverlay">
+  <div class="fb-modal">
+    <h3>Add Feedback</h3>
+    <div class="fb-type-label" id="fbTypeLabel"></div>
+    <div class="fb-context" id="fbContext"></div>
+    <div class="fb-field">
+      <label>Comment</label>
+      <textarea id="fbComment" placeholder="What's your feedback on this section?"></textarea>
+    </div>
+    <div class="fb-actions">
+      <button class="fb-btn fb-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+      <button class="fb-btn fb-btn-submit" onclick="submitFeedback()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Feedback side panel -->
+<div class="fb-panel" id="fbPanel">
+  <div class="fb-panel-head">
+    <h3>All Feedback</h3>
+    <button class="fb-panel-close" onclick="toggleFeedbackPanel()">&times;</button>
+  </div>
+  <div class="fb-panel-body" id="fbPanelBody"></div>
+</div>
+
+<!-- Admin toolbar -->
+<div class="admin-bar" id="adminBar">
+  <div class="admin-bar-label">Admin Mode</div>
+  <button class="admin-users-btn" onclick="toggleUsersPanel()">Users</button>
+  <button class="fb-btn admin-btn-export" onclick="exportFeedbackAsJSON()">Export Feedback</button>
+  <button class="fb-btn admin-btn-save" onclick="adminSaveChanges()">Save Changes</button>
+</div>
+
+<!-- Admin users panel -->
+<div class="admin-users-panel" id="adminUsersPanel">
+  <h4>Page Visitors</h4>
+  <ul class="admin-users-list" id="adminUsersList"></ul>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════ -->
+<div class="page on" id="p-overview">
+  <div class="hero" data-block-id="overview_intro">
+    <div class="eyebrow">Platform Introduction</div>
+    <h1>Everything in one place.<br/><i>Finally.</i></h1>
+    <p>Flent's new platform connects tenants, landlords, and every internal team through a single app — replacing WhatsApp chains, manual spreadsheets, and missed handoffs.</p>
+  </div>
+
+  <div class="ov-wrap">
+    <div class="pillars" data-block-id="overview_pillars">
+      <div class="pillar" data-block-id="pillar_one_home">
+        <div class="pico">🏠</div>
+        <h3>One home, one profile</h3>
+        <p>Every property gets a digital profile — documents, inventory, society info, and history — all in one place for anyone who needs it.</p>
+      </div>
+      <div class="pillar" data-block-id="pillar_automate">
+        <div class="pico">⚡</div>
+        <h3>Automate the routine</h3>
+        <p>Invoices, reminders, ticket routing, background checks, and move-in packs are all triggered automatically — the team focuses on what matters.</p>
+      </div>
+      <div class="pillar" data-block-id="pillar_sync">
+        <div class="pico">🔗</div>
+        <h3>Everyone stays in sync</h3>
+        <p>Tenants, landlords, vendors, and Flent teams are all connected through the same platform. No one is left guessing what's happening.</p>
+      </div>
+    </div>
+
+    <div class="who-label">Who's on the platform</div>
+    <div class="who-grid" data-block-id="overview_who_platform">
+      <div class="who-chip"><div class="wi">👤</div><h4>Tenants</h4><p>Onboard, pay rent, raise issues, move out</p></div>
+      <div class="who-chip"><div class="wi">🏘️</div><h4>Landlords</h4><p>Visibility on their property and tenants</p></div>
+      <div class="who-chip"><div class="wi">💼</div><h4>CX Team</h4><p>Manage tickets, move-ins, move-outs</p></div>
+      <div class="who-chip"><div class="wi">📣</div><h4>Sales Team</h4><p>Onboard tenants, hand off smoothly</p></div>
+      <div class="who-chip"><div class="wi">🔧</div><h4>Vendors</h4><p>Receive jobs, update status, get paid</p></div>
+      <div class="who-chip"><div class="wi">🏗️</div><h4>Partner Success</h4><p>Onboard properties, coordinate with landlords</p></div>
+      <div class="who-chip"><div class="wi">📋</div><h4>Contracts Team</h4><p>Deposits, deductions, refunds</p></div>
+      <div class="who-chip"><div class="wi">📦</div><h4>Product Team</h4><p>Inspections and inventory tracking</p></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     TENANT JOURNEY
+══════════════════════════════════════ -->
+<div class="page" id="p-tenant">
+  <div class="hero" data-block-id="tenant_intro">
+    <div class="eyebrow">Tenant Experience</div>
+    <h1>From enquiry<br/>to move-out — <i>all on the app.</i></h1>
+    <p>Select a stage to see exactly what the app does for you and which team is working behind the scenes at each step.</p>
+  </div>
+
+  <div class="tj-wrap">
+    <div class="stage-rail">
+      <div class="srail-item on" onclick="showStage('onboard',this)">
+        <div class="sr-num">Stage 01</div>
+        <div class="sr-label">🚀 Onboarding</div>
+        <div class="sr-sub">Sign up → Move in</div>
+      </div>
+      <div class="srail-item" onclick="showStage('living',this)">
+        <div class="sr-num">Stage 02</div>
+        <div class="sr-label">🏡 During Your Stay</div>
+        <div class="sr-sub">Rent, issues, living</div>
+      </div>
+      <div class="srail-item" onclick="showStage('moveout',this)">
+        <div class="sr-num">Stage 03</div>
+        <div class="sr-label">📦 Moving Out</div>
+        <div class="sr-sub">Exit → deposit refund</div>
+      </div>
+    </div>
+
+    <!-- ─── ONBOARDING ─── -->
+    <div class="stage-panel on" id="sp-onboard">
+      <div class="flow">
+
+        <!-- Step 1 -->
+        <div class="fstep" data-block-id="onboard_fill_form">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 01</div>
+            <div class="fstep-title">You fill the onboarding form</div>
+            <div class="fstep-desc">After expressing interest, you get an email with a link to fill your details — name, ID, preferences, work info.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card orange">
+              <div class="card-eyebrow orange">📱 What the app does</div>
+              <h4>Guided digital form — no paperwork, no printing</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📝</span> Single online form collects your Aadhaar, PAN, address, and work details in one go</li>
+                <li><span class="ficon">✅</span> Form validates and confirms receipt automatically — you always know it went through <span class="auto">auto</span></li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>Sales team handles first contact</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📅</span> <strong style="color:var(--ink)">Sales</strong> shares a calendar link — you pick a property visit slot yourself, no back-and-forth calls</li>
+                <li><span class="ficon">🤝</span> Once your form is submitted, they guide you to payment and hand you over to CX</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="fstep" data-block-id="onboard_token_payment">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 02</div>
+            <div class="fstep-title">You pay the ₹15,000 token to lock the room</div>
+            <div class="fstep-desc">Your room isn't confirmed until token payment is done. The app makes this instant and transparent.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card orange">
+              <div class="card-eyebrow orange">📱 What the app does</div>
+              <h4>Token payment triggers your entire onboarding</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">🔗</span> Payment link sent to you on WhatsApp — pay in seconds</li>
+                <li><span class="ficon">📲</span> Once paid, a QR code is automatically sent to download the Flent app <span class="auto">auto</span></li>
+                <li><span class="ficon">🔔</span> CX team is notified automatically and your onboarding file is created <span class="auto">auto</span></li>
+                <li><span class="ficon">🏠</span> Your room is now officially reserved in the system</li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>CX takes over from Sales</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💼</span> <strong style="color:var(--ink)">CX team</strong> is automatically looped in — no manual handoff needed</li>
+                <li><span class="ficon">🧹</span> CX schedules cleaning and prepares the property before you arrive</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="fstep" data-block-id="onboard_deposit_access">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 03</div>
+            <div class="fstep-title">You pay deposit + first rent &amp; get access</div>
+            <div class="fstep-desc">Before move-in day, you complete payments and the app gives you everything you need to walk in.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card orange">
+              <div class="card-eyebrow orange">📱 What the app does</div>
+              <h4>Your home is ready on the app before you arrive</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">🔑</span> Lockbox access code is released to you once full payment is confirmed <span class="auto">auto</span></li>
+                <li><span class="ficon">📋</span> All property details — annexures, society rules, utility info — appear on your app</li>
+                <li><span class="ficon">👋</span> A welcome email with move-in instructions is sent 2–3 days before <span class="auto">auto</span></li>
+                <li><span class="ficon">🧑‍🤝‍🧑</span> Your profile card is created and shared with existing flatmates <span class="auto">auto</span></li>
+                <li><span class="ficon">🏘️</span> Flatmates see who's arriving — cleaning and handover gets coordinated</li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>Three teams ensure move-in day is smooth</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💼</span> <strong style="color:var(--ink)">CX</strong> adds all your property info and populates the digital property file</li>
+                <li><span class="ficon">🏘️</span> <strong style="color:var(--ink)">Landlord CX</strong> coordinates with your building's society so entry is cleared</li>
+                <li><span class="ficon">🏗️</span> <strong style="color:var(--ink)">Partner Success</strong> has already handed over keys and set up the property before you arrive</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── DURING STAY ─── -->
+    <div class="stage-panel" id="sp-living">
+      <div class="flow">
+
+        <!-- Rent -->
+        <div class="fstep" data-block-id="living_rent_payments">
+          <div class="fstep-meta">
+            <div class="fstep-num">Every Month</div>
+            <div class="fstep-title">Paying rent &amp; charges</div>
+            <div class="fstep-desc">Rent is due between the 1st and 5th. The app tells you exactly what you owe and when, so there are no surprises.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card teal">
+              <div class="card-eyebrow teal">📱 What the app does</div>
+              <h4>Invoices land before the deadline — every time</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">🧾</span> Monthly invoice auto-generated with rent, any extra charges, and due date <span class="auto">auto</span></li>
+                <li><span class="ficon">⚠️</span> Penalty notice is included so you always know the cost of being late</li>
+                <li><span class="ficon">📩</span> Reminder sent if payment hasn't come in by the deadline <span class="auto">auto</span></li>
+                <li><span class="ficon">📊</span> Full payment history visible on your profile at any time</li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>CX monitors and resolves billing queries</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💼</span> <strong style="color:var(--ink)">CX team</strong> adds any additional charges (maintenance dues, etc.) directly from the app</li>
+                <li><span class="ficon">🏘️</span> <strong style="color:var(--ink)">Landlord</strong> can see monthly costs and payments on their dashboard</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maintenance -->
+        <div class="fstep" data-block-id="living_maintenance">
+          <div class="fstep-meta">
+            <div class="fstep-num">When Something Breaks</div>
+            <div class="fstep-title">Raising a maintenance issue</div>
+            <div class="fstep-desc">Something's broken or needs fixing. Instead of texting a number and hoping for the best, the app tracks it from start to finish.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card teal">
+              <div class="card-eyebrow teal">📱 What the app does</div>
+              <h4>Raise a ticket in seconds — track it in real time</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📷</span> Upload a photo of the issue — the app requires this before submitting, so vendors know exactly what's needed</li>
+                <li><span class="ficon">🔖</span> Pick the issue category (plumbing, electrical, furniture, etc.) and it routes to the right vendor automatically <span class="auto">auto</span></li>
+                <li><span class="ficon">📍</span> Live status updates as the ticket moves from "Assigned" to "In Progress" to "Done"</li>
+                <li><span class="ficon">⭐</span> Once resolved, a quick satisfaction survey is sent to you <span class="auto">auto</span></li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>CX and vendors act on your ticket</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💼</span> <strong style="color:var(--ink)">CX</strong> reviews complex tickets, assigns the right vendor, and follows up</li>
+                <li><span class="ficon">🔧</span> <strong style="color:var(--ink)">Vendor</strong> receives your photos and issue details, picks a time, and marks work done</li>
+                <li><span class="ficon">🏘️</span> <strong style="color:var(--ink)">Landlord</strong> can see the issue and how quickly it's being resolved on their dashboard</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Living + comms -->
+        <div class="fstep" data-block-id="living_flatmates_comms">
+          <div class="fstep-meta">
+            <div class="fstep-num">Day to Day</div>
+            <div class="fstep-title">Flatmates &amp; society updates</div>
+            <div class="fstep-desc">Living with others means coordination. The app handles shared dues, notices, and society announcements in one feed.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card teal">
+              <div class="card-eyebrow teal">📱 What the app does</div>
+              <h4>All flat communications in one place</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">🧑‍🤝‍🧑</span> Flatmates can log shared dues on the app — you see them as Flent notifications, no WhatsApp arguments</li>
+                <li><span class="ficon">📢</span> Society notices (maintenance, events, rules) show up on the app — pre-screened by Flent first</li>
+                <li><span class="ficon">🤖</span> AI chat answers your common questions instantly (policies, charges, society rules) — no need to call anyone <span class="new">new</span></li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>Flent screens what reaches you</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">✅</span> <strong style="color:var(--ink)">Flemp (Flent monitor)</strong> reviews all society notifications before they reach you — only relevant ones come through</li>
+                <li><span class="ficon">🏘️</span> <strong style="color:var(--ink)">Landlord</strong> can send you messages, but these go through Flent approval first</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── MOVE OUT ─── -->
+    <div class="stage-panel" id="sp-moveout">
+      <div class="flow">
+
+        <!-- Request -->
+        <div class="fstep" data-block-id="moveout_request">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 01</div>
+            <div class="fstep-title">You request to move out</div>
+            <div class="fstep-desc">No phone calls, no emails in the dark. You submit your move-out request on the app and everything kicks off from there.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card amber">
+              <div class="card-eyebrow amber">📱 What the app does</div>
+              <h4>One request starts the whole exit process <span class="new">new</span></h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📤</span> Dedicated move-out request page on the app — select your date, submit, done</li>
+                <li><span class="ficon">🔔</span> Flent's CX and contracts teams are notified instantly <span class="auto">auto</span></li>
+                <li><span class="ficon">🧑‍🤝‍🧑</span> Your flatmates are notified to settle any shared dues with you before you leave <span class="auto">auto</span></li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>CX confirms and coordinates</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💼</span> <strong style="color:var(--ink)">CX team</strong> verifies your move-out date and schedules an inspection</li>
+                <li><span class="ficon">🏘️</span> <strong style="color:var(--ink)">Landlord CX</strong> checks if the building society has any exit dues or charges</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inspection -->
+        <div class="fstep" data-block-id="moveout_inspection">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 02</div>
+            <div class="fstep-title">Property inspection</div>
+            <div class="fstep-desc">A Flent team member walks through the property. Everything is documented with photos so there's a clear, evidence-backed record.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card amber">
+              <div class="card-eyebrow amber">📱 What the app does</div>
+              <h4>Photo-documented inspection — no disputes</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📷</span> Inspection findings are logged on the app with photos during the walkthrough</li>
+                <li><span class="ficon">📋</span> Every item in the flat is checked against the original inventory logged at move-in</li>
+                <li><span class="ficon">🔗</span> Report goes directly to the Contracts team — no manual forwarding <span class="auto">auto</span></li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>Product team conducts the inspection</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📦</span> <strong style="color:var(--ink)">Product team</strong> does a thorough walk-through with automated photo documentation</li>
+                <li><span class="ficon">🔎</span> Checks all inventory items logged during setup — any missing or damaged items are flagged</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deposit -->
+        <div class="fstep" data-block-id="moveout_deposit_refund">
+          <div class="fstep-meta">
+            <div class="fstep-num">Step 03</div>
+            <div class="fstep-title">Deposit deduction &amp; refund</div>
+            <div class="fstep-desc">Your deposit is refunded after any valid deductions. The app shows you exactly what's being deducted and why — no black box.</div>
+          </div>
+          <div class="fstep-content">
+            <div class="app-card amber">
+              <div class="card-eyebrow amber">📱 What the app does</div>
+              <h4>Transparent deductions with photo evidence</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">💰</span> Full deduction breakdown shared with you directly on the app — itemised and clear</li>
+                <li><span class="ficon">🖼️</span> Inspection photos are attached so you can see the evidence behind each deduction</li>
+                <li><span class="ficon">📩</span> Refund amount communicated to you via the app and email <span class="auto">auto</span></li>
+                <li><span class="ficon">🔄</span> Refund status is trackable so you know where your money is at all times</li>
+              </ul>
+            </div>
+            <div class="app-card violet">
+              <div class="card-eyebrow violet">👥 Who's working for you</div>
+              <h4>Contracts team calculates and processes</h4>
+              <ul class="feat-list">
+                <li><span class="ficon">📋</span> <strong style="color:var(--ink)">Contracts team</strong> receives the full inspection report in the app, calculates deductions, and issues refund</li>
+                <li><span class="ficon">💬</span> They communicate the final amount and any queries through the platform — not over phone</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     TEAMS
+══════════════════════════════════════ -->
+<div class="page" id="p-teams">
+  <div class="hero" data-block-id="teams_intro">
+    <div class="eyebrow">For Internal Teams</div>
+    <h1>Less chasing.<br/><i>More doing.</i></h1>
+    <p>Every Flent team gets the tools to do their job without manual workarounds — here's what the platform unlocks for each role.</p>
+  </div>
+
+  <div class="teams-wrap">
+
+    <!-- CX TEAM -->
+    <div class="team-section" data-block-id="team_cx">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--teal-dim);font-size:26px">💼</div>
+        <div>
+          <h2>CX Team — Customer Experience</h2>
+          <p>Handles move-ins, maintenance tickets, billing, and move-outs. The platform replaces HubSpot sheets and WhatsApp with a single dashboard.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">📋</div>
+          <h4>Move-in dashboard</h4>
+          <p>See all upcoming move-in dates in one view. Trigger roommate notifications and cleaning schedules directly from the app — no PID sheets needed.</p>
+          <div class="fbadge">Replaces: HubSpot + manual sheets</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🎫</div>
+          <h4>Ticket management</h4>
+          <p>Assign maintenance tickets to vendors, track progress live, and close issues — all in one place. AI handles the simple queries so the team focuses on complex ones.</p>
+          <div class="fbadge">Replaces: WhatsApp vendor chains</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📅</div>
+          <h4>Calendar scheduling</h4>
+          <p>Share calendar links with tenants that only show available maintenance slots — no back-and-forth to find a time that works.</p>
+          <div class="fbadge" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.25)">Auto-availability</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🏠</div>
+          <h4>Property file management</h4>
+          <p>Add annexures, society rules, utility info, and property documents directly to a tenant's app profile — so they always have what they need without asking.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">💰</div>
+          <h4>Invoice & dues management</h4>
+          <p>Add maintenance dues and extra charges to a tenant's monthly invoice from the app. Reminders and penalties are applied automatically.</p>
+          <div class="fbadge" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.25)">Automated billing</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📦</div>
+          <h4>Inventory item requests</h4>
+          <p>Request individual item replacements (broken chair, faulty light, etc.) directly in the app — it goes straight to the Product team without any call or email.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES -->
+    <div class="team-section" data-block-id="team_sales">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--orange-dim);font-size:26px">📣</div>
+        <div>
+          <h2>Sales Team</h2>
+          <p>First contact with tenants — handles enquiries, property visits, and token payments before handing over to CX.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">📅</div>
+          <h4>Self-serve visit scheduling</h4>
+          <p>Share a calendar link with prospective tenants — they pick a visit slot from available times. No phone tag, no double bookings.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔗</div>
+          <h4>Token payment via WhatsApp</h4>
+          <p>Payment link is sent to the tenant on WhatsApp. Once paid, the app auto-confirms the room and triggers the CX handover — Sales doesn't need to do anything else.</p>
+          <div class="fbadge" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.25)">Fully automated handover</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">✅</div>
+          <h4>Zero-effort CX handover</h4>
+          <p>The moment token payment lands, CX is looped in automatically with all tenant details. No manual email, no risk of a missed transition.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANDLORD CX -->
+    <div class="team-section" data-block-id="team_landlord_cx">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--amber-dim);font-size:26px">🏘️</div>
+        <div>
+          <h2>Landlord CX / Experience Team</h2>
+          <p>Bridges Flent, landlords, and housing societies. Manages inspections and keeps the society info database up to date.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">🏛️</div>
+          <h4>Digital society coordination</h4>
+          <p>Coordinate move-in approvals and society formalities through the app — no more making calls to every building management office separately.</p>
+          <div class="fbadge">Replaces: Manual phone coordination</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🗂️</div>
+          <h4>Society database (live updates)</h4>
+          <p>Update society rules, charges, and info directly from the field — so CX, tenants, and landlords always have accurate, current data.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔍</div>
+          <h4>Inspection & exit workflows</h4>
+          <p>Conduct property inspections with built-in photo documentation. Check for society exit dues at move-out via a dedicated workflow — no Excel sheets.</p>
+          <div class="fbadge" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.25)">Standardised process</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNER SUCCESS -->
+    <div class="team-section" data-block-id="team_partner_success">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--violet-dim);font-size:26px">🏗️</div>
+        <div>
+          <h2>Partner Success Manager</h2>
+          <p>Onboards new properties — visits, documents condition, hands over keys, and connects landlords to the Flent system.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">📸</div>
+          <h4>Field documentation from the app</h4>
+          <p>Log property condition, decor, and setup details on the spot during the visit. Photos and notes upload directly — no emailing files later.</p>
+          <div class="fbadge">Replaces: Post-visit email reports</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔑</div>
+          <h4>Digital key handover confirmation</h4>
+          <p>Mark key handover as complete in the app — the Product team is notified instantly and has all property details ready for setup inspection.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📢</div>
+          <h4>Society notifications from the app</h4>
+          <p>Send building notices and updates to tenants and landlords through the platform — structured, logged, and tracked.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT TEAM -->
+    <div class="team-section" data-block-id="team_product">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--orange-dim);font-size:26px">📦</div>
+        <div>
+          <h2>Product Team</h2>
+          <p>Property setup inspections and inventory tracking — the team that ensures every Flent home meets the standard and every item is accounted for.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">📷</div>
+          <h4>Automated photo documentation</h4>
+          <p>Inspections now have built-in photo and video capture — so the record is complete, consistent, and always available. Solves the payment collection gap.</p>
+          <div class="fbadge">Fixes: Inconsistent photo records</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📦</div>
+          <h4>Inventory tracking (IMS)</h4>
+          <p>See every item in a property, who moved it, and when. Full movement history means no disputes at move-out about what was there when the tenant arrived.</p>
+          <div class="fbadge" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.25)">Connected to IMS</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔔</div>
+          <h4>Item replacement requests (from CX)</h4>
+          <p>When CX raises an item replacement request on the app, it lands directly with the Product team — no email, no missed message.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTRACTS -->
+    <div class="team-section" data-block-id="team_contracts">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--teal-dim);font-size:26px">📋</div>
+        <div>
+          <h2>Contracts Team</h2>
+          <p>Handles the financial end of every move-out — deposit deductions, refund calculations, and tenant communication.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">📑</div>
+          <h4>Inspection reports land directly</h4>
+          <p>No waiting for CX to email notes. Inspection findings and photos are in the app the moment the walkthrough is done — Contracts can start immediately.</p>
+          <div class="fbadge">Replaces: Manual report forwarding</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">💰</div>
+          <h4>Transparent deduction communication</h4>
+          <p>Share the itemised deduction breakdown with tenants directly through the platform — with photos attached. Fewer disputes, fewer calls.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔄</div>
+          <h4>Refund status tracking</h4>
+          <p>Tenants can see their refund status on the app. Contracts can update it in one place — no repeat queries about "when's my money coming?".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VENDORS -->
+    <div class="team-section" data-block-id="team_vendors">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--amber-dim);font-size:26px">🔧</div>
+        <div>
+          <h2>Vendors</h2>
+          <p>Third-party maintenance and repair partners who execute jobs raised through the ticketing system.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">🎫</div>
+          <h4>Photo-backed job briefs</h4>
+          <p>Every ticket comes with photos the tenant uploaded. Vendors arrive knowing exactly what's broken — fewer wasted visits, faster fixes.</p>
+          <div class="fbadge">Replaces: Vague WhatsApp job briefs</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📅</div>
+          <h4>Scheduling via the platform</h4>
+          <p>Confirm availability and time slots through the app. Tenants and CX are updated automatically when a visit is confirmed or completed.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">✅</div>
+          <h4>Job completion triggers payment</h4>
+          <p>Mark a job as done in the app — it triggers the CSAT survey for the tenant and updates the payment queue for Flent's finance team.</p>
+          <div class="fbadge" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.25)">Automated payment trigger</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANDLORDS -->
+    <div class="team-section" data-block-id="team_landlords">
+      <div class="team-head">
+        <div class="team-avatar" style="background:var(--violet-dim);font-size:26px">🏠</div>
+        <div>
+          <h2>Landlords</h2>
+          <p>Property owners who partner with Flent. The app gives them full visibility without needing to call anyone.</p>
+        </div>
+      </div>
+      <div class="team-features">
+        <div class="fblock">
+          <div class="fblock-icon">👤</div>
+          <h4>Tenant profile cards</h4>
+          <p>See a profile card for every tenant in your property — with masked ID documents and a background verification report for each person.</p>
+          <div class="fbadge" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.25)">New feature</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">✅</div>
+          <h4>Accept or reject incoming tenants</h4>
+          <p>Before a new tenant moves in, landlords get to review their profile and approve or decline — giving full control over who lives in their property.</p>
+          <div class="fbadge" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.25)">New feature</div>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔧</div>
+          <h4>Maintenance visibility dashboard</h4>
+          <p>See all active maintenance issues on the property, how quickly they're being resolved, and how much Flent is spending on their property — no calls needed.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📢</div>
+          <h4>Filtered society notifications</h4>
+          <p>Send messages to tenants through the app — but every message goes through Flent's screening first, so only appropriate, relevant communications go through.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">🔔</div>
+          <h4>Pending info reminders</h4>
+          <p>The app nudges landlords to complete property details (electricity, parking, gas info) so everything is in the system before the first tenant arrives.</p>
+        </div>
+        <div class="fblock">
+          <div class="fblock-icon">📊</div>
+          <h4>Monthly cost transparency</h4>
+          <p>Full visibility on what Flent spends on the property each month — maintenance, cleaning, vendor costs — all broken down and visible on the dashboard.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ── PAGE NAV ── */
+function show(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+  document.querySelector('.menu-toggle').classList.remove('open');
+  document.querySelector('.nav-links').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showStage(id, btn){
+  document.querySelectorAll('.stage-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.srail-item').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sp-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* ══════════════════════════════════════
+   FEEDBACK SYSTEM v2
+══════════════════════════════════════ */
+(function(){
+  const STORAGE_KEY = 'feedback_data';
+  const USER_KEY    = 'current_user';
+  const VISITORS_KEY = 'flent_visitors';
+
+  const loginOverlay = document.getElementById('fbLogin');
+  const loginInput   = document.getElementById('fbLoginName');
+  const tooltip      = document.getElementById('fbTooltip');
+  const overlay      = document.getElementById('fbOverlay');
+  const panel        = document.getElementById('fbPanel');
+  const adminBar     = document.getElementById('adminBar');
+  const userPill     = document.getElementById('fbUserPill');
+  const overallBtn   = document.getElementById('fbOverallBtn');
+
+  let currentUser = '';
+  let isAdmin = false;
+  let pendingFeedback = { type: '', selectedText: '', blockId: '' };
+
+  // ══════════════════════════════════
+  // STORAGE
+  // ══════════════════════════════════
+  function loadData(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const d = raw ? JSON.parse(raw) : null;
+      if(d && Array.isArray(d.feedback)) return d;
+      return { feedback: [], document: { last_updated_by: '', last_updated_at: '', html: '' } };
+    } catch(e){
+      return { feedback: [], document: { last_updated_by: '', last_updated_at: '', html: '' } };
+    }
+  }
+
+  function saveData(data){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateNavCount();
+    renderPanel();
+    renderBadges();
+    console.log('[Flent Feedback]', JSON.stringify(data, null, 2));
+  }
+
+  function uid(){
+    return 'fb_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7);
+  }
+
+  function escHtml(s){
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  // ══════════════════════════════════
+  // LOGIN
+  // ══════════════════════════════════
+  function checkLogin(){
+    const stored = localStorage.getItem(USER_KEY);
+    if(stored){
+      activateUser(stored);
+    } else {
+      loginOverlay.classList.remove('hidden');
+      setTimeout(function(){ loginInput.focus(); }, 200);
+    }
+  }
+
+  window.handleLogin = function(){
+    const name = loginInput.value.trim();
+    if(!name) return;
+    localStorage.setItem(USER_KEY, name);
+    activateUser(name);
+  };
+
+  // Allow Enter key to submit login
+  loginInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') handleLogin();
+  });
+
+  window.logoutUser = function(){
+    localStorage.removeItem(USER_KEY);
+    // Disable admin mode
+    if(isAdmin) disableAdmin();
+    currentUser = '';
+    isAdmin = false;
+    userPill.style.display = 'none';
+    loginOverlay.classList.remove('hidden');
+    setTimeout(function(){ loginInput.value = ''; loginInput.focus(); }, 200);
+  };
+
+  function activateUser(name){
+    currentUser = name;
+    isAdmin = (name.toLowerCase() === 'admin');
+    loginOverlay.classList.add('hidden');
+
+    // Show user pill
+    userPill.style.display = 'flex';
+    document.getElementById('fbUserName').textContent = name;
+    userPill.classList.toggle('admin', isAdmin);
+
+    // Track visitor
+    trackVisitor(name);
+
+    // Admin mode
+    if(isAdmin) enableAdmin();
+    else disableAdmin();
+
+    // Load saved document if admin edited it
+    loadSavedDocument();
+
+    // Inject hover tags on blocks
+    injectHoverTags();
+
+    updateNavCount();
+    renderBadges();
+  }
+
+  // ══════════════════════════════════
+  // VISITOR TRACKING
+  // ══════════════════════════════════
+  function trackVisitor(name){
+    var visitors = loadVisitors();
+    var existing = visitors.find(function(v){ return v.name === name; });
+    if(existing){
+      existing.last_seen = new Date().toISOString();
+      existing.visits = (existing.visits || 1) + 1;
+    } else {
+      visitors.push({
+        name: name,
+        first_seen: new Date().toISOString(),
+        last_seen: new Date().toISOString(),
+        visits: 1
+      });
+    }
+    localStorage.setItem(VISITORS_KEY, JSON.stringify(visitors));
+  }
+
+  function loadVisitors(){
+    try {
+      return JSON.parse(localStorage.getItem(VISITORS_KEY)) || [];
+    } catch(e){ return []; }
+  }
+
+  window.toggleUsersPanel = function(){
+    var panel = document.getElementById('adminUsersPanel');
+    panel.classList.toggle('open');
+    if(panel.classList.contains('open')) renderUsersPanel();
+  };
+
+  function renderUsersPanel(){
+    var list = document.getElementById('adminUsersList');
+    var visitors = loadVisitors();
+    if(visitors.length === 0){
+      list.innerHTML = '<li style="font-size:13px;color:var(--ink-dimmer)">No visitors yet.</li>';
+      return;
+    }
+    // Sort by last_seen descending
+    visitors.sort(function(a,b){ return new Date(b.last_seen) - new Date(a.last_seen); });
+    list.innerHTML = visitors.map(function(v){
+      var lastSeen = new Date(v.last_seen);
+      var timeStr = lastSeen.toLocaleDateString('en-IN',{day:'numeric',month:'short'}) + ', ' + lastSeen.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      var isOnline = v.name === currentUser;
+      var dotColor = v.name.toLowerCase() === 'admin' ? 'var(--amber)' : (isOnline ? 'var(--green)' : 'var(--ink-dimmer)');
+      return '<li class="admin-user-row">'
+        + '<span class="fb-user-dot" style="background:'+dotColor+'"></span>'
+        + '<strong>' + escHtml(v.name) + '</strong>'
+        + '<span>' + (v.visits || 1) + ' visit' + ((v.visits||1) > 1 ? 's' : '') + ' &middot; ' + timeStr + '</span>'
+        + '</li>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════
+  // HOVER TAGS ON SECTIONS
+  // ══════════════════════════════════
+  function injectHoverTags(){
+    // Remove any existing
+    document.querySelectorAll('.fb-hover-tag').forEach(function(t){ t.remove(); });
+    // Add to all blocks
+    document.querySelectorAll('[data-block-id]').forEach(function(el){
+      var tag = document.createElement('span');
+      tag.className = 'fb-hover-tag';
+      tag.textContent = '+ Add Feedback';
+      tag.onclick = function(e){
+        e.stopPropagation();
+        pendingFeedback.type = 'section';
+        pendingFeedback.selectedText = '';
+        pendingFeedback.blockId = el.dataset.blockId;
+        openFeedbackModal();
+      };
+      el.appendChild(tag);
+    });
+  }
+
+  // ══════════════════════════════════
+  // ADMIN MODE
+  // ══════════════════════════════════
+  function enableAdmin(){
+    document.body.classList.add('admin-mode');
+    adminBar.classList.add('visible');
+    document.querySelector('main').setAttribute('contenteditable', 'true');
+  }
+
+  function disableAdmin(){
+    document.body.classList.remove('admin-mode');
+    adminBar.classList.remove('visible');
+    document.querySelector('main').removeAttribute('contenteditable');
+  }
+
+  window.adminSaveChanges = function(){
+    const html = document.querySelector('main').innerHTML;
+    const data = loadData();
+    data.document = {
+      last_updated_by: currentUser,
+      last_updated_at: new Date().toISOString(),
+      html: html
+    };
+    saveData(data);
+
+    // Visual confirmation
+    const btn = adminBar.querySelector('.admin-btn-save');
+    const orig = btn.textContent;
+    btn.textContent = 'Saved!';
+    btn.style.background = 'var(--green)';
+    setTimeout(function(){
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 1500);
+  };
+
+  function loadSavedDocument(){
+    const data = loadData();
+    if(data.document && data.document.html){
+      document.querySelector('main').innerHTML = data.document.html;
+    }
+  }
+
+  // ══════════════════════════════════
+  // EXPORT FEEDBACK (Admin only)
+  // ══════════════════════════════════
+  window.exportFeedbackAsJSON = function(){
+    const data = loadData();
+    const exportObj = {
+      feedback: data.feedback,
+      exported_at: new Date().toISOString(),
+      exported_by: currentUser
+    };
+
+    const jsonStr = JSON.stringify(exportObj, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const ts = new Date().toISOString().replace(/:/g, '-').replace(/\.\d+Z$/, 'Z');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'feedback-export-' + ts + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // ══════════════════════════════════
+  // BLOCK ID LOOKUP
+  // ══════════════════════════════════
+  function findBlockId(node){
+    let el = node.nodeType === 3 ? node.parentElement : node;
+    while(el && el !== document.body){
+      if(el.dataset && el.dataset.blockId) return el.dataset.blockId;
+      el = el.parentElement;
+    }
+    return '';
+  }
+
+  // ══════════════════════════════════
+  // TEXT SELECTION → TOOLTIP
+  // ══════════════════════════════════
+  document.addEventListener('mouseup', function(e){
+    if(!currentUser) return;
+    if(e.target.closest('.fb-modal,.fb-overlay,.fb-panel,.fb-tooltip,.fb-nav-btn,.fb-badge,.fb-login-overlay,.admin-bar,.fb-overall-btn')) return;
+
+    setTimeout(function(){
+      const sel = window.getSelection();
+      const text = sel.toString().trim();
+
+      if(text.length > 0){
+        const range = sel.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        tooltip.style.left = (rect.left + rect.width/2 - 60 + window.scrollX) + 'px';
+        tooltip.style.top  = (rect.top - 40 + window.scrollY) + 'px';
+        tooltip.style.display = 'block';
+        pendingFeedback.type = 'text';
+        pendingFeedback.selectedText = text.slice(0, 300);
+        pendingFeedback.blockId = findBlockId(range.startContainer);
+      } else {
+        tooltip.style.display = 'none';
+      }
+    }, 10);
+  });
+
+  // ══════════════════════════════════
+  // SECTION CLICK → TOOLTIP
+  // ══════════════════════════════════
+  document.addEventListener('click', function(e){
+    if(!currentUser) return;
+    if(e.target.closest('.fb-modal,.fb-overlay,.fb-panel,.fb-tooltip,.fb-nav-btn,.fb-badge,.fb-login-overlay,.admin-bar,.fb-overall-btn,nav,button')) return;
+
+    const sel = window.getSelection().toString().trim();
+    if(sel.length > 0) return;
+
+    const blockEl = e.target.closest('[data-block-id]');
+    if(blockEl){
+      const rect = blockEl.getBoundingClientRect();
+      tooltip.style.left = (rect.right - 120 + window.scrollX) + 'px';
+      tooltip.style.top  = (rect.top + 8 + window.scrollY) + 'px';
+      tooltip.style.display = 'block';
+      pendingFeedback.type = 'section';
+      pendingFeedback.selectedText = '';
+      pendingFeedback.blockId = blockEl.dataset.blockId;
+    }
+  });
+
+  document.addEventListener('scroll', function(){ tooltip.style.display = 'none'; }, true);
+
+  // ══════════════════════════════════
+  // OVERALL FEEDBACK
+  // ══════════════════════════════════
+  window.openOverallFeedback = function(){
+    pendingFeedback.type = 'overall';
+    pendingFeedback.selectedText = '';
+    pendingFeedback.blockId = 'document';
+    openFeedbackModal();
+  };
+
+  // ══════════════════════════════════
+  // FEEDBACK MODAL
+  // ══════════════════════════════════
+  window.openFeedbackModal = function(){
+    tooltip.style.display = 'none';
+
+    // Type label
+    const typeLabel = document.getElementById('fbTypeLabel');
+    const typeClass = 'fb-type-' + pendingFeedback.type;
+    typeLabel.className = 'fb-type-label ' + typeClass;
+    var typeNames = { text: 'Text Selection', section: 'Section Feedback', overall: 'Overall Feedback' };
+    typeLabel.textContent = typeNames[pendingFeedback.type] || 'Feedback';
+
+    // Context
+    const ctx = document.getElementById('fbContext');
+    if(pendingFeedback.type === 'text' && pendingFeedback.selectedText){
+      ctx.innerHTML = '<em>"' + escHtml(pendingFeedback.selectedText.slice(0,120)) + (pendingFeedback.selectedText.length > 120 ? '...' : '') + '"</em>';
+    } else if(pendingFeedback.type === 'section' && pendingFeedback.blockId){
+      ctx.innerHTML = 'Section: <em>' + escHtml(pendingFeedback.blockId.replace(/_/g, ' ')) + '</em>';
+    } else if(pendingFeedback.type === 'overall'){
+      ctx.innerHTML = '<em>Feedback on the entire document</em>';
+    } else {
+      ctx.textContent = '';
+    }
+
+    document.getElementById('fbComment').value = '';
+    overlay.classList.add('open');
+    setTimeout(function(){ document.getElementById('fbComment').focus(); }, 100);
+    window.getSelection().removeAllRanges();
+  };
+
+  window.closeFeedbackModal = function(){
+    overlay.classList.remove('open');
+    pendingFeedback = { type: '', selectedText: '', blockId: '' };
+  };
+
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) closeFeedbackModal();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(overlay.classList.contains('open')) closeFeedbackModal();
+      else if(panel.classList.contains('open')) toggleFeedbackPanel();
+      var up = document.getElementById('adminUsersPanel');
+      if(up.classList.contains('open')) up.classList.remove('open');
+    }
+  });
+
+  // ══════════════════════════════════
+  // SUBMIT FEEDBACK
+  // ══════════════════════════════════
+  window.submitFeedback = function(){
+    const comment = document.getElementById('fbComment').value.trim();
+    if(!comment){ alert('Please enter a comment.'); return; }
+
+    const data = loadData();
+    data.feedback.push({
+      id: uid(),
+      user: currentUser,
+      type: pendingFeedback.type || 'section',
+      comment: comment,
+      selected_text: pendingFeedback.selectedText || null,
+      block_identifier: pendingFeedback.blockId || null,
+      timestamp: new Date().toISOString()
+    });
+
+    saveData(data);
+    closeFeedbackModal();
+  };
+
+  // ══════════════════════════════════
+  // DELETE FEEDBACK (Admin only)
+  // ══════════════════════════════════
+  window.deleteFeedback = function(id){
+    if(!isAdmin) return;
+    var data = loadData();
+    data.feedback = data.feedback.filter(function(f){ return f.id !== id; });
+    saveData(data);
+  };
+
+  // ══════════════════════════════════
+  // SIDE PANEL
+  // ══════════════════════════════════
+  window.toggleFeedbackPanel = function(filterBlock){
+    panel.classList.toggle('open');
+    if(panel.classList.contains('open')) renderPanel(filterBlock);
+  };
+
+  function renderPanel(filterBlock){
+    const body = document.getElementById('fbPanelBody');
+    const data = loadData();
+    let items = data.feedback;
+    if(filterBlock) items = items.filter(function(f){ return f.block_identifier === filterBlock; });
+
+    if(items.length === 0){
+      body.innerHTML = '<div class="fb-empty">No feedback yet.<br/>Select text, click a section, or use the overall feedback button.</div>';
+      return;
+    }
+
+    var typeColors = {
+      text:    { bg: 'var(--teal-dim)',   color: 'var(--teal)' },
+      section: { bg: 'var(--violet-dim)', color: 'var(--violet)' },
+      overall: { bg: 'var(--amber-dim)',  color: 'var(--amber)' }
+    };
+
+    body.innerHTML = items.slice().reverse().map(function(f){
+      var tc = typeColors[f.type] || typeColors.section;
+      var typeBadge = '<span class="fb-item-type" style="background:'+tc.bg+';color:'+tc.color+'">' + escHtml(f.type || 'section') + '</span>';
+
+      var sel = '';
+      if(f.selected_text){
+        sel = '<div class="fb-item-sel">"' + escHtml(f.selected_text.slice(0,100)) + '"</div>';
+      } else if(f.block_identifier && f.block_identifier !== 'document'){
+        sel = '<div class="fb-item-sel">' + escHtml(f.block_identifier.replace(/_/g,' ')) + '</div>';
+      }
+
+      var time = new Date(f.timestamp);
+      var timeStr = time.toLocaleDateString('en-IN',{day:'numeric',month:'short'}) + ' at ' + time.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+
+      var deleteBtn = isAdmin
+        ? '<button class="fb-item-delete" onclick="deleteFeedback(\'' + f.id + '\')">Delete</button>'
+        : '';
+
+      return '<div class="fb-item">'
+        + '<div class="fb-item-head"><span class="fb-item-user">' + escHtml(f.user) + '</span>' + typeBadge + '</div>'
+        + '<div class="fb-item-comment">' + escHtml(f.comment) + '</div>'
+        + sel
+        + '<div class="fb-item-time">' + timeStr + '</div>'
+        + deleteBtn
+        + '</div>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════
+  // BADGES ON BLOCKS
+  // ══════════════════════════════════
+  function renderBadges(){
+    document.querySelectorAll('.fb-badge').forEach(function(b){ b.remove(); });
+
+    var data = loadData();
+    var counts = {};
+    data.feedback.forEach(function(f){
+      if(f.block_identifier && f.block_identifier !== 'document'){
+        counts[f.block_identifier] = (counts[f.block_identifier]||0) + 1;
+      }
+    });
+
+    Object.keys(counts).forEach(function(blockId){
+      var el = document.querySelector('[data-block-id="'+blockId+'"]');
+      if(!el) return;
+      if(getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      var badge = document.createElement('div');
+      badge.className = 'fb-badge';
+      badge.textContent = counts[blockId];
+      badge.title = counts[blockId] + ' feedback item(s)';
+      badge.onclick = function(e){ e.stopPropagation(); toggleFeedbackPanel(blockId); };
+      el.appendChild(badge);
+    });
+  }
+
+  // ══════════════════════════════════
+  // NAV COUNT
+  // ══════════════════════════════════
+  function updateNavCount(){
+    var data = loadData();
+    var countEl = document.getElementById('fbNavCount');
+    var n = data.feedback.length;
+    countEl.textContent = n;
+    countEl.classList.toggle('has', n > 0);
+  }
+
+  // ══════════════════════════════════
+  // INIT
+  // ══════════════════════════════════
+  checkLogin();
+  updateNavCount();
+  renderBadges();
+})();
+</script>
+</body>
+</html>
